@@ -1,29 +1,86 @@
 import getpass
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
-chrome_path = r"/home/clutchard/chromedriver_linux64/chromedriver"
-Continue = raw_input("Welcome to Fsu Class Enrollment Bot\nPress Enter to Continue\n")
-username = raw_input("Enter your FsuId: ")
-password = getpass.getpass("Enter your password: ")
-print("\nHow would you like to add the course\n")
-print("1. The four digit class number\n")
-print("2. The course name and section number\n")
-choice = raw_input("Please enter your choice: ")
 
 
-driver = webdriver.Chrome(chrome_path)
-driver.get("https://cas.fsu.edu/cas/login?service=https%3A%2F%2Fwww.my.fsu.edu%2Fc%2Fportal%2Flogin")
-userfield = driver.find_element_by_name("username")
-passfield = driver.find_element_by_name("password")
-userfield.send_keys(username)
-passfield.send_keys(password)
-login_button = driver.find_element_by_name("submit")
-login_button.click()
+def get_credentials():
+	username = raw_input("Enter your FsuId: ")
+	password = getpass.getpass("Enter your password: ")
+	return username, password
 
-student_center_button = WebDriverWait(driver, 10).until(lambda driver: 
-driver.find_element_by_id("link_icon_200"))
-student_center_button.click()
-#enroll_button = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_xpath("""//*[@id="DERIVED_SSS_SCR_SSS_LINK_ANCHOR3"]"""))
-driver.implicitly_wait(5)
-enroll_button = driver.find_element_by_xpath("""//*[@id="DERIVED_SSS_SCR_SSS_LINK_ANCHOR3"]""")
-enroll_button.click()
+
+def login_function(driver, username, password):
+	driver.get("https://cas.fsu.edu/cas/login?service=https%3A%2F%2Fwww.my.fsu.edu%2Fc%2Fportal%2Flogin")
+	userfield = driver.find_element_by_name("username")
+	passfield = driver.find_element_by_name("password")
+	userfield.send_keys(username)
+	passfield.send_keys(password)
+	login_button = driver.find_element_by_name("submit")
+	login_button.click()
+	student_center_button = WebDriverWait(driver, 5).until(lambda driver: 
+	driver.find_element_by_id("link_icon_200"))
+
+def student_central(driver):
+	student_center_button = WebDriverWait(driver, 5).until(lambda driver: 
+	driver.find_element_by_id("link_icon_200"))
+	student_center_button.click()
+	enroll_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_xpath("""//*[@id="DERIVED_SSS_SCR_SSS_LINK_ANCHOR3"]"""))
+	#enroll_button.click()
+
+
+if __name__ == '__main__':
+
+	chrome_path = r"/home/clutchard/chromedriver_linux64/chromedriver"
+	#path to the downloaded chrome driver
+
+	Continue = raw_input("Welcome to Fsu Class Enrollment Bot\nPress Enter to Continue: \n")
+
+	username, password = get_credentials()
+	#gets the user login credentials
+
+	print("\nHow would you like to add the course:\n")
+	print("\t1. The four digit class number\n")
+	print("\t2. The course name and section number\n")
+
+	choice = raw_input("Please enter your choice: ")
+	if choice == '1':
+		class_number = raw_input("\nPlease enter the 4 digit class number: ")
+	else:
+		course_name = raw_input("Please enter the course name as it appears in student central: ")
+		section_number = raw_input("Please enter the section number: ")
+	#Gets the user credentials and also gets the way they want to search for the class
+
+	driver = webdriver.Chrome(chrome_path)
+	#opens a chrome browser
+
+	while True: 
+		try:
+			login_function(driver, username, password)
+			break
+			#trys to login to the fsu website
+		except TimeoutException:
+			print("\nFsu Credentials incorrect\nTry Again\n")
+			username, password = get_credentials()
+	#Error occurs if user credentials are wrong or if cant find student central button on new page
+
+
+	while True:
+		try:
+			student_central(driver)
+			break
+		except TimeoutException:
+			print("Couldn't find student central button")
+			print("Contact Support")
+	#Error Occurs if can't locate the enroll button on the newly loaded page
+
+
+	if choice == '1':
+		print("Choice 1")
+	else:
+		print("Choice 2")
+
+
+
+
+
