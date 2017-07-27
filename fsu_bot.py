@@ -1,4 +1,5 @@
 import getpass
+import sys
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
@@ -50,11 +51,11 @@ if __name__ == '__main__':
 	if choice == '1':
 		x = True
 		class_number = raw_input("\nNow enter the 4 digit class number: ")
-		if len(class_number) == 4 and (class_number.isdigit()):
+		if (class_number.isdigit()):
 			x = False
 		while x == True:
 			class_number = raw_input("\nPlease try again: ")
-			if len(class_number) == 4 and (class_number.isdigit()):
+			if (class_number.isdigit()):
 				x = False
 	else:
 		course_name = raw_input("Please enter the course name as it appears in student central: ")
@@ -80,8 +81,11 @@ if __name__ == '__main__':
 			student_central(driver)
 			break
 		except TimeoutException:
-			print("Couldn't find student central button")
+			print("Error: \"Couldn't find Enroll button\"")
 			print("Contact Support")
+			sys.exit()
+			
+
 	#Error occurs if can't locate the enroll button on the newly loaded page
 
 
