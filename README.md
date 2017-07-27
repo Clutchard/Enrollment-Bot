@@ -1,5 +1,6 @@
 # pythots
 Class enrollment bot
+
 Need to download the chrome driver
 https://sites.google.com/a/chromium.org/chromedriver/downloads
 
