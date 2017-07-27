@@ -43,9 +43,19 @@ if __name__ == '__main__':
 	print("\t1. The four digit class number\n")
 	print("\t2. The course name and section number\n")
 
+
+
+	#Choice 1 has error check to make sure its a 4 digit number
 	choice = raw_input("Please enter your choice: ")
 	if choice == '1':
-		class_number = raw_input("\nPlease enter the 4 digit class number: ")
+		x = True
+		class_number = raw_input("\nNow enter the 4 digit class number: ")
+		if len(class_number) == 4 and (class_number.isdigit()):
+			x = False
+		while x == True:
+			class_number = raw_input("\nPlease try again: ")
+			if len(class_number) == 4 and (class_number.isdigit()):
+				x = False
 	else:
 		course_name = raw_input("Please enter the course name as it appears in student central: ")
 		section_number = raw_input("Please enter the section number: ")
@@ -72,7 +82,7 @@ if __name__ == '__main__':
 		except TimeoutException:
 			print("Couldn't find student central button")
 			print("Contact Support")
-	#Error Occurs if can't locate the enroll button on the newly loaded page
+	#Error occurs if can't locate the enroll button on the newly loaded page
 
 
 	if choice == '1':
