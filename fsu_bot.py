@@ -26,8 +26,8 @@ def student_central(driver):
 	student_center_button = WebDriverWait(driver, 5).until(lambda driver: 
 	driver.find_element_by_id("link_icon_200"))
 	student_center_button.click()
-	enroll_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_xpath("""//*[@id="DERIVED_SSS_SCR_SSS_LINK_ANCHOR3"]"""))
-	#enroll_button.click()
+	enroll_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_SSS_SCR_SSS_LINK_ANCHOR3$span"))
+	enroll_button.click()
 
 
 if __name__ == '__main__':
@@ -84,9 +84,9 @@ if __name__ == '__main__':
 			print("Error: \"Couldn't find Enroll button\"")
 			print("Contact Support")
 			sys.exit()
-			
-
 	#Error occurs if can't locate the enroll button on the newly loaded page
+	
+	#comment
 
 
 	if choice == '1':
