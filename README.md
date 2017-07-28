@@ -11,3 +11,11 @@ The get the path of the .exe file and hardcode into the python code
   -copy and past this path into the chrome_path variable
 
 Also need to pip install selenium
+
+
+helpful selenium link: 
+https://www.youtube.com/watch?v=bhYulVzYRng
+
+
+really in depth selenium link:
+https://www.youtube.com/watch?v=l15ZJAbxCL8&t=2527s
