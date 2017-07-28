@@ -19,3 +19,6 @@ https://www.youtube.com/watch?v=bhYulVzYRng
 
 really in depth selenium link:
 https://www.youtube.com/watch?v=l15ZJAbxCL8&t=2527s
+
+selenium docs:
+http://selenium-python.readthedocs.io/
