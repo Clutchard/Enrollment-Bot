@@ -1,8 +1,10 @@
 import getpass
 import sys
+import os
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
+from pathlib import *
 
 
 def get_credentials():
@@ -32,7 +34,7 @@ def student_central(driver):
 
 if __name__ == '__main__':
 
-	chrome_path = r"/home/clutchard/chromedriver_linux64/chromedriver"
+	chrome_path = os.getenv('HOME')+'/chromedriver'
 	#path to the downloaded chrome driver
 
 	Continue = raw_input("Welcome to Fsu Class Enrollment Bot\nPress Enter to Continue: \n")
