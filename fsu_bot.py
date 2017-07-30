@@ -23,6 +23,10 @@ def get_class_number():
 					x = False
 	return class_number
 
+def get_class_info():
+	print("hello")
+
+
 
 def login_function(driver, username, password):
 	driver.get("https://cas.fsu.edu/cas/login?service=https%3A%2F%2Fwww.my.fsu.edu%2Fc%2Fportal%2Flogin")
@@ -53,6 +57,14 @@ def class_number_search(driver, course_number):
 	enter_button.click()
 	next_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB"))
 	next_button.click()
+	next_button2 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB$280$"))
+	next_button2.click()
+
+def shopping_cart(driver):
+		proceed_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_LINK_ADD_ENRL$82$"))
+		proceed_button.click()
+		finish_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SUBMIT"))
+		finish_button.click()
 
 
 
@@ -119,7 +131,13 @@ if __name__ == '__main__':
 				print("\nIncorrect Class Number\nTry Again\n")
 				class_number = get_class_number()
 
+		while True:
+			try:
+				shopping_cart(driver)
+				break
 
+			except TimeoutException:
+				print("Shopping_cart is Enmpty")
 	else:
 		print("Choice 2")
 
