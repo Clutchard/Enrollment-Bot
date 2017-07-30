@@ -13,6 +13,12 @@ The get the path of the .exe file and hardcode into the python code
 Also need to pip install selenium
 
 
+For testing class enrollment use course number 328 to succesfully enroll
+For a failure use class code 12345 to test error check
+
+
+
+
 helpful selenium link: 
 https://www.youtube.com/watch?v=bhYulVzYRng
 
