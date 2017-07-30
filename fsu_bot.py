@@ -1,8 +1,11 @@
 import getpass
 import sys
 import os
+import time
+from random import randint
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 from pathlib import *
 
@@ -56,6 +59,8 @@ def class_number_search(driver, course_number):
 	enter_button = driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_ADDTOLIST2$9$")
 	enter_button.click()
 	next_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB"))
+	lab_check(driver)
+	next_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB"))
 	next_button.click()
 	next_button2 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB$280$"))
 	next_button2.click()
@@ -65,6 +70,26 @@ def shopping_cart(driver):
 		proceed_button.click()
 		finish_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SUBMIT"))
 		finish_button.click()
+		table = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("SSR_SS_ERD_ER$scroll$0"))
+		image = driver.find_element_by_xpath("""//*[@id="win0divDERIVED_REGFRM1_SSR_STATUS_LONG$0"]/div/img""")
+		img_src = image.get_attribute("src")
+		if "SUCCESS" in img_src:
+			return True
+		else:
+			startover_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_SSR_LINK_STARTOVER"))
+			startover_button.click()
+			time.sleep(randint(2,15))
+			return False
+
+#This part doesnt work if there is a lab
+def lab_check(driver):
+	try:
+		lab_button = driver.find_element_by_id("SSR_CLS_TBL_RE$sels$0$$0")
+		lab_button.click()
+		return driver
+
+	except NoSuchElementException:
+		return driver
 
 
 
@@ -130,17 +155,17 @@ if __name__ == '__main__':
 			except TimeoutException:
 				print("\nIncorrect Class Number\nTry Again\n")
 				class_number = get_class_number()
-
-		while True:
+		loop = False		
+		while loop == False:
 			try:
-				shopping_cart(driver)
-				break
+				loop = shopping_cart(driver)
 
 			except TimeoutException:
 				print("Shopping_cart is Enmpty")
 	else:
 		print("Choice 2")
 
+	print("You have been enrolled")
 
 
 
