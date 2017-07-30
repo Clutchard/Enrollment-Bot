@@ -11,7 +11,7 @@ from pathlib import *
 
 
 def get_credentials():
-	username = raw_input("Enter your FsuId: ")
+	username = raw_input("Enter your FSUID: ")
 	password = getpass.getpass("Enter your password: ")
 	return username, password
 
@@ -114,7 +114,7 @@ if __name__ == '__main__':
 	chrome_path = os.getenv('HOME')+'/chromedriver'
 	#path to the downloaded chrome driver
 
-	Continue = raw_input("Welcome to Fsu Class Enrollment Bot\nPress Enter to Continue: \n")
+	Continue = raw_input("Welcome to the Fsu Class Enrollment Bot\nPress \"Enter\" to Continue: \n")
 
 	username, password = get_credentials()
 	#gets the user login credentials
@@ -127,11 +127,18 @@ if __name__ == '__main__':
 
 	#Choice 1 has error check to make sure its a 4 digit number
 	choice = raw_input("Please enter your choice: ")
+	while choice not in ['1','2']:
+		print("Choice is invalid. Please try again.")
+		choice = raw_input("Please enter your choice: ")
+		if choice == '1':
+			break
+		if choice == '2':
+			break
 	class_number = ""
 	if choice == '1':
 		temp = get_class_number()
 		class_number = temp
-	else:
+	elif choice == '2':
 		course_name = raw_input("Please enter the course name as it appears in student central: ")
 		course_number = raw_input("Please enter the course number: ")
 	#Gets the user credentials and also gets the way they want to search for the class
