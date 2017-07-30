@@ -56,7 +56,23 @@ def class_specific_search(driver,course_name,course_number):
 	driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR").clear()
 	search_button = driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SRCH")
 	search_button.click()
-	class_forms_search(driver,course_name,course_number)
+
+
+	#frame = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_xpath("""//*[@id="ptifrmtgtframe"]"""))
+    	#driver.switch_to.frame(frame)
+
+	#driver.find_element_by_id("SSR_CLSRCH_WRK_SUBJECT$2").clear()
+	coursefield = WebDriverWait(driver,5).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_SUBJECT$2"))
+	#coursefield = driver.find_element_by_id("SSR_CLSRCH_WRK_SUBJECT$2")
+	coursefield.send_keys(course_name)
+
+	#driver.find_element_by_id("SSR_CLSRCH_WRK_CATALOG_NBR$3").clear()
+	coursenumfield = WebDriverWait(driver,5).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_CATALOG_NBR$3"))
+	#coursenumfield = driver.find_element_by_id("SSR_CLSRCH_WRK_CATALOG_NBR$3")
+	coursenumfield.send_keys(course_number)
+
+	search_button1 = driver.find_element_by_id("CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH")
+	search_button1.click()
 
 def class_number_search(driver, course_number):
 	if counter == 0:
@@ -73,13 +89,6 @@ def class_number_search(driver, course_number):
 	next_button2 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB$280$"))
 	next_button2.click()
 
-def class_forms_search(driver, course_name, course_number):
-	coursefield = driver.find_element_by_id("SSR_CLSRCH_WRK_SUBJECT$2")
-	coursenumfield = driver.find_element_by_id("SSR_CLSRCH_WRK_CATALOG_NBR$3")
-	coursefield.send_keys(course_name)
-	coursenumfield.send_keys(course_number)
-	search_button = driver.find_element_by_id("CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH")
-	search_button.click()
 
 def shopping_cart(driver):
 		proceed_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_LINK_ADD_ENRL$82$"))
