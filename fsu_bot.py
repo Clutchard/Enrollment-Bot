@@ -59,6 +59,8 @@ def class_specific_search(driver,course_name,course_number):
 	class_forms_search(driver,course_name,course_number)
 
 def class_number_search(driver, course_number):
+	if counter == 0:
+		print ("Press CTRL + C to cancel at anytime")
 	driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR").clear()
 	num_field = driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR")
 	num_field.send_keys(course_number)
@@ -114,7 +116,7 @@ if __name__ == '__main__':
 	chrome_path = os.getenv('HOME')+'/chromedriver'
 	#path to the downloaded chrome driver
 
-	Continue = raw_input("Welcome to the Fsu Class Enrollment Bot\nPress \"Enter\" to Continue: \n")
+	Continue = raw_input("Welcome to the Fsu Class Enrollment Bot\nCaution: Please be certain of the desired class details before running the Bot.\nPress \"Enter\" to Continue: \n")
 
 	username, password = get_credentials()
 	#gets the user login credentials
@@ -152,7 +154,7 @@ if __name__ == '__main__':
 			break
 			#trys to login to the fsu website
 		except TimeoutException:
-			print("\nFsu Credentials incorrect\nTry Again\n")
+			print("\nFsu Credentials incorrect.\nPlease try again.\n")
 			username, password = get_credentials()
 	#Error occurs if user credentials are wrong or if cant find student central button on new page
 
@@ -167,14 +169,16 @@ if __name__ == '__main__':
 			sys.exit()
 	#Error occurs if can't locate the enroll button on the newly loaded page
 
+	counter = 0		#Counter so I can print to the screen a specific message only once.
 	if choice == '1':
 		while True: 
 			try:
 				class_number_search(driver, class_number)
+				counter += 1
 				break
 				#trys to login to the fsu website
 			except TimeoutException:
-				print("\nIncorrect Class Number\nTry Again\n")
+				print("\nIncorrect Class Number.\nPlease try again.\n")
 				class_number = get_class_number()
 		loop = False		
 		while loop == False:
