@@ -52,6 +52,11 @@ def student_central(driver):
     enroll_button.click()
     num_field = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR"))
 
+def class_specific_search(driver,course_name,section_number):
+	driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR").clear()
+	search_button = driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SRCH")
+	search_button.click()
+
 def class_number_search(driver, course_number):
 	driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR").clear()
 	num_field = driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR")
@@ -161,12 +166,24 @@ if __name__ == '__main__':
 				loop = shopping_cart(driver)
 
 			except TimeoutException:
-				print("Shopping_cart is Enmpty")
+				print("Shopping_cart is Empty")
 	else:
 		print("Choice 2")
+		while True:
+			try:
+				class_specific_search(driver,course_name,section_number)
+				break
+			except TimeoutException:
+				print("Incorrect course name or section number\nTry Again\n")
 
-	print("You have been enrolled")
+		loop = False		
+		while loop == False:
+			try:
+				loop = shopping_cart(driver)
+
+			except TimeoutException:
+				print("Shopping_cart is Empty")				
 
 
 
-
+print("You have been enrolled")
