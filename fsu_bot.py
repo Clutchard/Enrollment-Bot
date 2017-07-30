@@ -52,10 +52,11 @@ def student_central(driver):
     enroll_button.click()
     num_field = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR"))
 
-def class_specific_search(driver,course_name,section_number):
+def class_specific_search(driver,course_name,course_number):
 	driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR").clear()
 	search_button = driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SRCH")
 	search_button.click()
+	class_forms_search(driver,course_name,course_number)
 
 def class_number_search(driver, course_number):
 	driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR").clear()
@@ -69,6 +70,14 @@ def class_number_search(driver, course_number):
 	next_button.click()
 	next_button2 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB$280$"))
 	next_button2.click()
+
+def class_forms_search(driver, course_name, course_number):
+	coursefield = driver.find_element_by_id("SSR_CLSRCH_WRK_SUBJECT$2")
+	coursenumfield = driver.find_element_by_id("SSR_CLSRCH_WRK_CATALOG_NBR$3")
+	coursefield.send_keys(course_name)
+	coursenumfield.send_keys(course_number)
+	search_button = driver.find_element_by_id("CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH")
+	search_button.click()
 
 def shopping_cart(driver):
 		proceed_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_LINK_ADD_ENRL$82$"))
@@ -124,7 +133,7 @@ if __name__ == '__main__':
 		class_number = temp
 	else:
 		course_name = raw_input("Please enter the course name as it appears in student central: ")
-		section_number = raw_input("Please enter the section number: ")
+		course_number = raw_input("Please enter the course number: ")
 	#Gets the user credentials and also gets the way they want to search for the class
 
 	driver = webdriver.Chrome(chrome_path)
@@ -171,7 +180,7 @@ if __name__ == '__main__':
 		print("Choice 2")
 		while True:
 			try:
-				class_specific_search(driver,course_name,section_number)
+				class_specific_search(driver,course_name,course_number)
 				break
 			except TimeoutException:
 				print("Incorrect course name or section number\nTry Again\n")
