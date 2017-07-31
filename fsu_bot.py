@@ -17,7 +17,7 @@ def get_credentials():
 
 def get_class_number():
 	x = True
-	class_number = raw_input("\nNow enter the nummerical class number: ")
+	class_number = raw_input("\nNow enter the numercial class number: ")
 	if (class_number.isdigit()):
 			x = False
 			while x == True:
@@ -54,8 +54,6 @@ def student_central(driver):
 
 def class_specific_search(driver,course_name,course_number):
 	driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR").clear()
-	if mycounter == 0:
-		print ("\nPlease do not exit the browser window.\nPress CTRL + C to cancel at anytime")
 	search_button = driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SRCH")
 	search_button.click()
 
@@ -70,9 +68,9 @@ def class_specific_search(driver,course_name,course_number):
 	
 	counter = 0
 	while WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("MTG_DAYTIME$" + str(counter))):
-		class_time =  driver.find_element_by_id("MTG_DAYTIME$" + str(counter))
-		class_room =  driver.find_element_by_id("MTG_ROOM$" + str(counter))
-		class_instructor = driver.find_element_by_id("MTG_INSTR$" + str(counter))
+		class_time =  WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("MTG_DAYTIME$" + str(counter)))
+		class_room =  WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("MTG_ROOM$" + str(counter)))
+		class_instructor = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("MTG_INSTR$" + str(counter)))
 		counter = counter + 1
 		
 		class_time_text = class_time.text
@@ -87,15 +85,16 @@ def class_specific_search(driver,course_name,course_number):
 		print("****************************************")
 
 	option = raw_input("Which class would you like to add? Please select an option:")
-	select_button1 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("SSR_PB_SELECT$" + str(option - 1)))
-	select_button1.click()
 
+	next_button2 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB$280$"))
+	next_button2.click()
+	
 
 
 
 def class_number_search(driver, course_number):
-	if mycounter == 0:
-		print ("\nPlease do not exit the browser window.\nPress CTRL + C to cancel at anytime")
+	if counter == 0:
+		print ("Press CTRL + C to cancel at anytime")
 	driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR").clear()
 	num_field = driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR")
 	num_field.send_keys(course_number)
@@ -197,12 +196,12 @@ if __name__ == '__main__':
 			sys.exit()
 	#Error occurs if can't locate the enroll button on the newly loaded page
 
-	mycounter = 0		#Counter so I can print to the screen a specific message only once.
+	counter = 0		#Counter so I can print to the screen a specific message only once.
 	if choice == '1':
 		while True: 
 			try:
 				class_number_search(driver, class_number)
-				mycounter += 1
+				counter += 1
 				break
 				#trys to login to the fsu website
 			except TimeoutException:
@@ -216,6 +215,7 @@ if __name__ == '__main__':
 			except TimeoutException:
 				print("Shopping_cart is Empty")
 	else:
+		print("Choice 2")
 		while True:
 			try:
 				class_specific_search(driver,course_name,course_number)
