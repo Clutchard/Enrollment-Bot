@@ -57,22 +57,25 @@ def class_specific_search(driver,course_name,course_number):
 	search_button = driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SRCH")
 	search_button.click()
 
-
-	#frame = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_xpath("""//*[@id="ptifrmtgtframe"]"""))
-    	#driver.switch_to.frame(frame)
-
-	#driver.find_element_by_id("SSR_CLSRCH_WRK_SUBJECT$2").clear()
 	coursefield = WebDriverWait(driver,5).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_SUBJECT$2"))
-	#coursefield = driver.find_element_by_id("SSR_CLSRCH_WRK_SUBJECT$2")
 	coursefield.send_keys(course_name)
 
-	#driver.find_element_by_id("SSR_CLSRCH_WRK_CATALOG_NBR$3").clear()
 	coursenumfield = WebDriverWait(driver,5).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_CATALOG_NBR$3"))
-	#coursenumfield = driver.find_element_by_id("SSR_CLSRCH_WRK_CATALOG_NBR$3")
 	coursenumfield.send_keys(course_number)
 
-	search_button1 = driver.find_element_by_id("CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH")
+	search_button1 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH"))
 	search_button1.click()
+	
+	counter = 0
+	while WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("MTG_DAYTIME$" + str(counter))):
+		class_time =  driver.find_element_by_id("MTG_DAYTIME$" + str(counter))
+		counter = counter + 1
+		class_time_text = class_time.text
+		
+		print("\nOption: " + str(counter))
+		print class_time_text
+
+
 
 def class_number_search(driver, course_number):
 	if counter == 0:
