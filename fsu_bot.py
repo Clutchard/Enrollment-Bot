@@ -69,11 +69,21 @@ def class_specific_search(driver,course_name,course_number):
 	counter = 0
 	while WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("MTG_DAYTIME$" + str(counter))):
 		class_time =  driver.find_element_by_id("MTG_DAYTIME$" + str(counter))
+		class_room =  driver.find_element_by_id("MTG_ROOM$" + str(counter))
+		class_instructor = driver.find_element_by_id("MTG_INSTR$" + str(counter))
 		counter = counter + 1
+		
 		class_time_text = class_time.text
+		class_room_text = class_room.text
+		class_instructor_text = class_instructor.text
 		
 		print("\nOption: " + str(counter))
-		print class_time_text
+		print("****************************************")
+		print("Class Time:\n" + class_time_text + "\n")
+		print("Class Room:\n" + class_room_text + "\n")
+		print("Class Instructor:\n" + class_instructor_text)
+		print("****************************************")
+
 
 
 
