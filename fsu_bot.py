@@ -17,7 +17,7 @@ def get_credentials():
 
 def get_class_number():
 	x = True
-	class_number = raw_input("\nNow enter the nummerical class number: ")
+	class_number = raw_input("\nEnter the nummerical class number: ")
 	if (class_number.isdigit()):
 			x = False
 			while x == True:
@@ -154,14 +154,14 @@ if __name__ == '__main__':
 	chrome_path = os.getenv('HOME')+'/chromedriver'
 	#path to the downloaded chrome driver
 
-	Continue = raw_input("Welcome to the Fsu Class Enrollment Bot\nCaution: Please be certain of the desired class details before running the Bot.\nPress \"Enter\" to Continue: \n")
+	Continue = raw_input("Welcome to the Fsu Class Enrollment Bot\nCaution: Please be certain of the desired class details and clear your shopping cart before running the Bot.\nPress \"Enter\" to Continue: \n")
 
 	username, password = get_credentials()
 	#gets the user login credentials
 
 	print("\nHow would you like to add the course:\n")
 	print("\t1. The four digit class number\n")
-	print("\t2. The course name and section number\n")
+	print("\t2. The course name and course number\n")
 
 
 
@@ -192,7 +192,7 @@ if __name__ == '__main__':
 			break
 			#trys to login to the fsu website
 		except TimeoutException:
-			print("\nFsu Credentials incorrect.\nPlease try again.\n")
+			print("\nFSU login credentials are incorrect.\nPlease try again.\n")
 			username, password = get_credentials()
 	#Error occurs if user credentials are wrong or if cant find student central button on new page
 
@@ -202,7 +202,7 @@ if __name__ == '__main__':
 			student_central(driver)
 			break
 		except TimeoutException:
-			print("Error: \"Couldn't find Enroll button\"")
+			print("Error: \"Could not find \"Enroll\" button\"")
 			print("Contact Support")
 			sys.exit()
 	#Error occurs if can't locate the enroll button on the newly loaded page
@@ -216,7 +216,7 @@ if __name__ == '__main__':
 				break
 				#trys to login to the fsu website
 			except TimeoutException:
-				print("\nIncorrect Class Number.\nPlease try again.\n")
+				print("\nIncorrect class number.\nPlease try again.\n")
 				class_number = get_class_number()
 		loop = False		
 		while loop == False:
@@ -224,14 +224,14 @@ if __name__ == '__main__':
 				loop = shopping_cart(driver)
 
 			except TimeoutException:
-				print("Shopping_cart is Empty")
+				print("Shopping cart is empty")
 	else:
 		while True:
 			try:
 				class_specific_search(driver,course_name,course_number)
 				break
 			except TimeoutException:
-				print("Incorrect course name or section number\nTry Again\n")
+				print("Incorrect course name or course number.\nPlease try again\n")
 
 		loop = False		
 		while loop == False:
@@ -239,7 +239,7 @@ if __name__ == '__main__':
 				loop = shopping_cart(driver)
 
 			except TimeoutException:
-				print("Shopping_cart is Empty")				
+				print("Shopping cart is empty")				
 
 
 
