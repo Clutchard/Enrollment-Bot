@@ -160,17 +160,21 @@ if __name__ == '__main__':
 	print("\nHow would you like to add the course:\n")
 	print("\t1. The four digit class number\n")
 	print("\t2. The course name and section number\n")
+	print("\t3. The course is already in shopping cart loop\n")
 
 
 
 	choice = raw_input("Please enter your choice: ")
-	while choice not in ['1','2']:
+	while choice not in ['1', '2', '3']:
 		print("Choice is invalid. Please try again.")
 		choice = raw_input("Please enter your choice: ")
 		if choice == '1':
 			break
 		if choice == '2':
 			break
+		if choice == '3':
+			break
+
 	class_number = ""
 	course_name = ""
 	course_number = ""
@@ -225,7 +229,7 @@ if __name__ == '__main__':
 
 			except TimeoutException:
 				print("Shopping_cart is Empty")
-	else:
+	elif choice == 2:
 		search_button = driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SRCH")
 		search_button.click()
 		while True:
@@ -242,7 +246,17 @@ if __name__ == '__main__':
 				loop = shopping_cart(driver)
 
 			except TimeoutException:
-				print("Shopping_cart is Empty")				
+				print("Shopping_cart is Empty")		
+	else:
+		loop = False		
+		while loop == False:
+			try:
+				loop = shopping_cart(driver)
+
+			except TimeoutException:
+				print("Shopping_cart is Empty")
+				print("Please put class in shopping cart")
+				sys.exit()
 
 
 
