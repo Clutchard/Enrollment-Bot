@@ -31,7 +31,7 @@ def get_class_info():
 			course_name = raw_input("\nPlease try again: ")
 			if (course_name.isalpha() and len(course_name) == 3):
 				break
-				
+
 	course_number = raw_input("Please enter the course number: ")
 	if not(course_number.isdigit()):
 			while True:
@@ -49,41 +49,39 @@ def login_function(driver, username, password):
 	passfield.send_keys(password)
 	login_button = driver.find_element_by_name("submit")
 	login_button.click()
-	student_center_button = WebDriverWait(driver, 5).until(lambda driver: 
+	student_center_button = WebDriverWait(driver, 10).until(lambda driver: 
 	driver.find_element_by_id("link_icon_200"))
 
 def student_central(driver):
-    student_center_button = WebDriverWait(driver, 5).until(lambda driver: 
+    student_center_button = WebDriverWait(driver, 10).until(lambda driver: 
     driver.find_element_by_id("link_icon_200"))
     student_center_button.click()
-    frame = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_xpath("""//*[@id="ptifrmtgtframe"]"""))
+    frame = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_xpath("""//*[@id="ptifrmtgtframe"]"""))
     driver.switch_to.frame(frame)
     enroll_button = driver.find_element_by_id("DERIVED_SSS_SCR_SSS_LINK_ANCHOR3")
     enroll_button.click()
-    num_field = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR"))
+    num_field = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR"))
 
 def class_specific_search(driver, course_name, course_number):
-	coursefield = WebDriverWait(driver,5).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_SUBJECT$2"))
+	coursefield = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_SUBJECT$2"))
 	coursefield.clear()
 	coursefield.send_keys(course_name)
 
-	coursenumfield = WebDriverWait(driver,5).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_CATALOG_NBR$3"))
+	coursenumfield = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_CATALOG_NBR$3"))
 	coursenumfield.clear()
 	coursenumfield.send_keys(course_number)
-	check_box = WebDriverWait(driver,5).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_SSR_OPEN_ONLY_LBL$8"))
-	check_box.click()
 	driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 	time.sleep(5)
 	search_button1 = driver.find_element_by_xpath("""//*[@id="CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH"]""")
 	search_button1.click()
 	counter = 0	
-	class_time =  WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("MTG_DAYTIME$" + str(counter)))
+	class_time =  WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("MTG_DAYTIME$" + str(counter)))
 	while True:
 		try:
 
-			class_time =  WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("MTG_DAYTIME$" + str(counter)))
-			class_room =  WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("MTG_ROOM$" + str(counter)))
-			class_instructor = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("MTG_INSTR$" + str(counter)))
+			class_time =  WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("MTG_DAYTIME$" + str(counter)))
+			class_room =  WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("MTG_ROOM$" + str(counter)))
+			class_instructor = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("MTG_INSTR$" + str(counter)))
 			counter = counter + 1
 		
 			class_time_text = class_time.text
@@ -101,10 +99,10 @@ def class_specific_search(driver, course_name, course_number):
 
 	option = raw_input("Which class would you like to add? Please select an option: ")
 	print ("Press CTRL + C to cancel at anytime")
-	select_button1 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("SSR_PB_SELECT$" + str(int(option)-1)))
+	select_button1 = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("SSR_PB_SELECT$" + str(int(option)-1)))
 	select_button1.click()
 
-	next_button2 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB$280$"))
+	next_button2 = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB$280$"))
 	next_button2.click()
 	
 
@@ -118,26 +116,27 @@ def class_number_search(driver, course_number):
 	num_field.send_keys(course_number)
 	enter_button = driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_ADDTOLIST2$9$")
 	enter_button.click()
-	next_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB"))
+	next_button = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB"))
 	driver = lab_check(driver)
-	next_button1 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB"))
+	#doesn't work with a lab
+	next_button1 = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB"))
 	next_button1.click()
-	next_button2 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB$280$"))
+	next_button2 = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB$280$"))
 	next_button2.click()
 
 
 def shopping_cart(driver):
-		proceed_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_LINK_ADD_ENRL$82$"))
+		proceed_button = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_LINK_ADD_ENRL$82$"))
 		proceed_button.click()
-		finish_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SUBMIT"))
+		finish_button = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SUBMIT"))
 		finish_button.click()
-		table = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("SSR_SS_ERD_ER$scroll$0"))
+		table = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("SSR_SS_ERD_ER$scroll$0"))
 		image = driver.find_element_by_xpath("""//*[@id="win0divDERIVED_REGFRM1_SSR_STATUS_LONG$0"]/div/img""")
 		img_src = image.get_attribute("src")
 		if "SUCCESS" in img_src:
 			return True
 		else:
-			startover_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_SSR_LINK_STARTOVER"))
+			startover_button = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_SSR_LINK_STARTOVER"))
 			startover_button.click()
 			time.sleep(randint(2,15))
 			return False
@@ -161,15 +160,15 @@ if __name__ == '__main__':
 	chrome_path = os.getenv('HOME')+'/chromedriver'
 	#path to the downloaded chrome driver
 
-	Continue = raw_input("Welcome to the Fsu Class Enrollment Bot\nCaution: Please be certain of the desired class details before running the Bot.\nMake sure your shopping cart is empty before start\n\nPress \"Enter\" to Continue: \n")
+	Continue = raw_input("Welcome to the Fsu Class Enrollment Bot\nCaution: Please be certain of the desired class details before running the Bot.\nPress \"Enter\" to Continue: \n")
 
 	username, password = get_credentials()
 	#gets the user login credentials
 
 	print("\nHow would you like to add the course:\n")
-	print("\t1. The four digit class number\n")
+	print("\t1. The specific class number\n")
 	print("\t2. The course name and section number\n")
-	print("\t3. The course is already in shopping cart loop\n")
+	print("\t3. The course is already in shopping cart\n")
 
 
 
@@ -238,9 +237,11 @@ if __name__ == '__main__':
 
 			except TimeoutException:
 				print("Shopping_cart is Empty")
-	elif choice == 2:
+	elif choice == '2':
 		search_button = driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SRCH")
 		search_button.click()
+		check_box = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_SSR_OPEN_ONLY_LBL$8"))
+		check_box.click()
 		while True:
 			try:
 				class_specific_search(driver, course_name, course_number)
