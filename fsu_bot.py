@@ -16,7 +16,7 @@ def get_credentials():
 	return username, password
 
 def get_class_number():
-	class_number = raw_input("\nNow enter the numercial class number: ")
+	class_number = raw_input("\nEnter the numerical class number: ")
 	if not(class_number.isdigit()):
 			while True:
 				class_number = raw_input("\nPlease try again: ")
@@ -25,7 +25,7 @@ def get_class_number():
 	return class_number
 
 def get_class_info():
-	course_name = raw_input("Please enter the course abrevation(Ex: cop) : ")
+	course_name = raw_input("Please enter the course abrevation (Ex: COP): ")
 	if not(course_name.isalpha() and len(course_name) == 3):
 		while True:
 			course_name = raw_input("\nPlease try again: ")
@@ -175,7 +175,7 @@ if __name__ == '__main__':
 
 	print("\nHow would you like to add the course:\n")
 	print("\t1. The specific class number\n")
-	print("\t2. The course name and section number\n")
+	print("\t2. The course name and course number\n")
 	print("\t3. The course is already in shopping cart\n")
 
 
@@ -212,7 +212,7 @@ if __name__ == '__main__':
 			break
 			#trys to login to the fsu website
 		except TimeoutException:
-			print("\nFsu Credentials incorrect.\nPlease try again.\n")
+			print("\nFSU log in credentials are incorrect.\nPlease try again.\n")
 			username, password = get_credentials()
 	#Error occurs if user credentials are wrong or if cant find student central button on new page
 
@@ -222,7 +222,7 @@ if __name__ == '__main__':
 			student_central(driver)
 			break
 		except TimeoutException:
-			print("Error: \"Couldn't find Enroll button\"")
+			print("Error: \"Could not find Enroll button\"")
 			print("Contact Support")
 			sys.exit()
 	#Error occurs if can't locate the enroll button on the newly loaded page
@@ -236,7 +236,7 @@ if __name__ == '__main__':
 				break
 				#trys to login to the fsu website
 			except TimeoutException:
-				print("\nIncorrect Class Number.\nPlease try again.\n")
+				print("\nIncorrect class number.\nPlease try again.\n")
 				class_number = get_class_number()
 		loop = False		
 		while loop == False:
@@ -244,7 +244,7 @@ if __name__ == '__main__':
 				loop = shopping_cart(driver)
 
 			except TimeoutException:
-				print("Shopping_cart is Empty")
+				print("Shopping cart is empty.")
 	elif choice == '2':
 		search_button = driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SRCH")
 		search_button.click()
@@ -255,7 +255,7 @@ if __name__ == '__main__':
 				class_specific_search(driver, course_name, course_number)
 				break
 			except TimeoutException:
-				print("\nIncorrect course name or section number\nTry Again\n")
+				print("\nIncorrect course name or course number.\nPlease try again.\n")
 				course_name, course_number = get_class_info()
 
 		loop = False		
@@ -264,7 +264,7 @@ if __name__ == '__main__':
 				loop = shopping_cart(driver)
 
 			except TimeoutException:
-				print("Shopping_cart is Empty")		
+				print("Shopping cart is empty.")		
 	else:
 		loop = False		
 		while loop == False:
@@ -272,8 +272,8 @@ if __name__ == '__main__':
 				loop = shopping_cart(driver)
 
 			except TimeoutException:
-				print("Shopping_cart is Empty")
-				print("Please a put class in shopping cart")
+				print("Shopping cart is empty.")
+				print("Please place a class into the shopping cart")
 				sys.exit()
 
 print("You have been enrolled")
