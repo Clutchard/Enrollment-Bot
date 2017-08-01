@@ -16,19 +16,28 @@ def get_credentials():
 	return username, password
 
 def get_class_number():
-	x = True
 	class_number = raw_input("\nNow enter the numercial class number: ")
-	if (class_number.isdigit()):
-			x = False
-			while x == True:
+	if not(class_number.isdigit()):
+			while True:
 				class_number = raw_input("\nPlease try again: ")
 				if (class_number.isdigit()):
-					x = False
+					break
 	return class_number
 
 def get_class_info():
 	course_name = raw_input("Please enter the course abrevation(Ex: cop) : ")
+	if not(course_name.isalpha() and len(course_name) == 3):
+		while True:
+			course_name = raw_input("\nPlease try again: ")
+			if (course_name.isalpha() and len(course_name) == 3):
+				break
+				
 	course_number = raw_input("Please enter the course number: ")
+	if not(course_number.isdigit()):
+			while True:
+				course_number = raw_input("\nPlease try again: ")
+				if (course_number.isdigit()):
+					break	
 	return course_name, course_number
 
 
@@ -257,7 +266,5 @@ if __name__ == '__main__':
 				print("Shopping_cart is Empty")
 				print("Please put class in shopping cart")
 				sys.exit()
-
-
 
 print("You have been enrolled")
