@@ -13,8 +13,10 @@ Also need to pip install selenium
 For testing class enrollment use course number 328 to succesfully enroll
 
 For a failure use class code 12345
+
 For a class with a lab 12515
-for testing the loop in shopping cart use 1876
+
+For testing the loop in shopping cart use 1876
 
 
 
