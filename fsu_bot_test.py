@@ -61,6 +61,8 @@ def class_specific_search(driver, course_name, course_number):
 	coursenumfield = WebDriverWait(driver,5).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_CATALOG_NBR$3"))
 	coursenumfield.clear()
 	coursenumfield.send_keys(course_number)
+	check_box = WebDriverWait(driver,5).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_SSR_OPEN_ONLY_LBL$8"))
+	check_box.click()
 	driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 	time.sleep(5)
 	search_button1 = driver.find_element_by_xpath("""//*[@id="CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH"]""")
@@ -108,9 +110,9 @@ def class_number_search(driver, course_number):
 	enter_button = driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_ADDTOLIST2$9$")
 	enter_button.click()
 	next_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB"))
-	lab_check(driver)
-	next_button = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB"))
-	next_button.click()
+	driver = lab_check(driver)
+	next_button1 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB"))
+	next_button1.click()
 	next_button2 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB$280$"))
 	next_button2.click()
 
@@ -150,7 +152,7 @@ if __name__ == '__main__':
 	chrome_path = os.getenv('HOME')+'/chromedriver'
 	#path to the downloaded chrome driver
 
-	Continue = raw_input("Welcome to the Fsu Class Enrollment Bot\nCaution: Please be certain of the desired class details before running the Bot.\nMake Sure your shopping Cart is empty before start\nPress \"Enter\" to Continue: \n")
+	Continue = raw_input("Welcome to the Fsu Class Enrollment Bot\nCaution: Please be certain of the desired class details before running the Bot.\nMake sure your shopping cart is empty before start\n\nPress \"Enter\" to Continue: \n")
 
 	username, password = get_credentials()
 	#gets the user login credentials
