@@ -5,17 +5,15 @@ Need to download the chrome driver
 https://sites.google.com/a/chromium.org/chromedriver/downloads
 
 Then extract the .exe from the download
-
-The get the path of the .exe file and hardcode into the python code
-  - use readlink -f chromedrivier when your in the chrome driver directory
-  -copy and past this path into the chrome_path variable
+The .exe file needs to be in your home directory
 
 Also need to pip install selenium
 
 
 For testing class enrollment use course number 328 to succesfully enroll
-For a failure use class code 12345 to test error check
-12515 class with lab
+
+For a failure use class code 12345
+For a class with a lab 12515
 for testing the loop in shopping cart use 1876
 
 
