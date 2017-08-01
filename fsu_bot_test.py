@@ -27,8 +27,9 @@ def get_class_number():
 	return class_number
 
 def get_class_info():
-	print("hello")
-
+	course_name = raw_input("Please enter the course abrevation(Ex: cop) : ")
+	course_number = raw_input("Please enter the course number: ")
+	return course_name, course_number
 
 
 def login_function(driver, username, password):
@@ -53,21 +54,19 @@ def student_central(driver):
     num_field = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR"))
 
 def class_specific_search(driver, course_name, course_number):
-	
-	search_button = driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SRCH")
-	search_button.click()
-
 	coursefield = WebDriverWait(driver,5).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_SUBJECT$2"))
+	coursefield.clear()
 	coursefield.send_keys(course_name)
 
 	coursenumfield = WebDriverWait(driver,5).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_CATALOG_NBR$3"))
+	coursenumfield.clear()
 	coursenumfield.send_keys(course_number)
 	driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 	time.sleep(5)
 	search_button1 = driver.find_element_by_xpath("""//*[@id="CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH"]""")
 	search_button1.click()
-	
-	counter = 0
+	counter = 0	
+	class_time =  WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("MTG_DAYTIME$" + str(counter)))
 	while True:
 		try:
 
@@ -87,12 +86,11 @@ def class_specific_search(driver, course_name, course_number):
 			print("Class Instructor:\n" + class_instructor_text)
 			print("****************************************")
 		except TimeoutException:
-			print("found error")
 			break
 
-	option = raw_input("Which class would you like to add? Please select an option:")
-
-	select_button1 = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id("SSR_PB_SELECT$" + str(int(option)-1)))
+	option = raw_input("Which class would you like to add? Please select an option: ")
+	print ("Press CTRL + C to cancel at anytime")
+	select_button1 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("SSR_PB_SELECT$" + str(int(option)-1)))
 	select_button1.click()
 
 	next_button2 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB$280$"))
@@ -152,7 +150,7 @@ if __name__ == '__main__':
 	chrome_path = os.getenv('HOME')+'/chromedriver'
 	#path to the downloaded chrome driver
 
-	Continue = raw_input("Welcome to the Fsu Class Enrollment Bot\nCaution: Please be certain of the desired class details before running the Bot.\nPress \"Enter\" to Continue: \n")
+	Continue = raw_input("Welcome to the Fsu Class Enrollment Bot\nCaution: Please be certain of the desired class details before running the Bot.\nMake Sure your shopping Cart is empty before start\nPress \"Enter\" to Continue: \n")
 
 	username, password = get_credentials()
 	#gets the user login credentials
@@ -163,7 +161,6 @@ if __name__ == '__main__':
 
 
 
-	#Choice 1 has error check to make sure its a 4 digit number
 	choice = raw_input("Please enter your choice: ")
 	while choice not in ['1','2']:
 		print("Choice is invalid. Please try again.")
@@ -173,12 +170,15 @@ if __name__ == '__main__':
 		if choice == '2':
 			break
 	class_number = ""
+	course_name = ""
+	course_number = ""
 	if choice == '1':
 		temp = get_class_number()
 		class_number = temp
 	elif choice == '2':
-		course_name = raw_input("Please enter the course name as it appears in student central: ")
-		course_number = raw_input("Please enter the course number: ")
+		temp = get_class_info()
+		course_name, course_number = temp
+		
 	#Gets the user credentials and also gets the way they want to search for the class
 
 	driver = webdriver.Chrome(chrome_path)
@@ -224,13 +224,15 @@ if __name__ == '__main__':
 			except TimeoutException:
 				print("Shopping_cart is Empty")
 	else:
-		print("Choice 2")
+		search_button = driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SRCH")
+		search_button.click()
 		while True:
 			try:
 				class_specific_search(driver, course_name, course_number)
 				break
 			except TimeoutException:
-				print("Incorrect course name or section number\nTry Again\n")
+				print("\nIncorrect course name or section number\nTry Again\n")
+				course_name, course_number = get_class_info()
 
 		loop = False		
 		while loop == False:
