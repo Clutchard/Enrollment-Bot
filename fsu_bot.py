@@ -89,12 +89,19 @@ def class_specific_search(driver,course_name,course_number):
 		print("Class Time:\n" + class_time_text + "\n")
 		print("Class Room:\n" + class_room_text + "\n")
 		print("Class Instructor:\n" + class_instructor_text)
-		print("****************************************")
-		i+=1
-		#except:
-			#print("Exception!")
 
-	option = raw_input("Which class would you like to add? Please select an option:")
+		try:
+			special = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLSRCH_DESCR$" + str(i)))
+			special = special.text
+			print ("\nSpecial Topic: " + str(special))
+		except:
+			donothing = None
+
+		print("****************************************")
+
+		i+=1
+
+	option = raw_input("Which class would you like to add? Please select an option: ")
 	select_button1 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("SSR_PB_SELECT$" + str(int(option) - 1)))
 	select_button1.click()
 	next_button2 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_CLS_DTL_NEXT_PB$280$"))
@@ -240,6 +247,10 @@ if __name__ == '__main__':
 
 			except TimeoutException:
 				print("Shopping cart is empty")				
+
+
+
+print("You have been enrolled")			
 
 
 
