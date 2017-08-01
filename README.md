@@ -23,7 +23,7 @@ For a class with a lab 12515
 For testing the loop in shopping cart use 1876
 
 If class has a lab and everything fails. Worse case put class in shopping cart and choose option 3 to try to add.
-
+Can only have one class in shopping cart at a time.
 
 helpful selenium link: 
 https://www.youtube.com/watch?v=bhYulVzYRng
