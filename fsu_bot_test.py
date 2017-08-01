@@ -52,7 +52,7 @@ def student_central(driver):
     enroll_button.click()
     num_field = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("DERIVED_REGFRM1_CLASS_NBR"))
 
-def class_specific_search(driver,course_name,course_number):
+def class_specific_search(driver, course_name, course_number):
 	
 	search_button = driver.find_element_by_id("DERIVED_REGFRM1_SSR_PB_SRCH")
 	search_button.click()
@@ -62,8 +62,9 @@ def class_specific_search(driver,course_name,course_number):
 
 	coursenumfield = WebDriverWait(driver,5).until(lambda driver: driver.find_element_by_id("SSR_CLSRCH_WRK_CATALOG_NBR$3"))
 	coursenumfield.send_keys(course_number)
-
-	search_button1 = WebDriverWait(driver, 5).until(lambda driver: driver.find_element_by_id("CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH"))
+	driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+	time.sleep(5)
+	search_button1 = driver.find_element_by_xpath("""//*[@id="CLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH"]""")
 	search_button1.click()
 	
 	counter = 0
@@ -85,7 +86,8 @@ def class_specific_search(driver,course_name,course_number):
 			print("Class Room:\n" + class_room_text + "\n")
 			print("Class Instructor:\n" + class_instructor_text)
 			print("****************************************")
-		except: 
+		except TimeoutException:
+			print("found error")
 			break
 
 	option = raw_input("Which class would you like to add? Please select an option:")
@@ -225,7 +227,7 @@ if __name__ == '__main__':
 		print("Choice 2")
 		while True:
 			try:
-				class_specific_search(driver,course_name,course_number)
+				class_specific_search(driver, course_name, course_number)
 				break
 			except TimeoutException:
 				print("Incorrect course name or section number\nTry Again\n")
