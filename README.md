@@ -30,3 +30,8 @@ https://www.youtube.com/watch?v=l15ZJAbxCL8&t=2527s
 
 selenium docs:
 http://selenium-python.readthedocs.io/
+
+
+Bug Report:
+  -Specific class number won't work if a lab is attached to class
+  -Course Name and number search doesn't account for results being greater than 50 classes
